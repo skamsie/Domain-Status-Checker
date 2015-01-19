@@ -5,19 +5,6 @@ or command line input. Additionally it gets the Domain Name Registrar and referr
 The results are stored in an automatically generated html file or printed to stdout 
 depending on the options used.
 
-!!IMPORTANT: This script assumes that the external file containing the domains to be
-verified are each on a newline and are of the following form:
-
-  VALID:
-  'https://www.example.com'
-  'http://www.example.com'
-  'www.example.com'
-  'example.com'
-
-  NOT VALID:
-  'http://example.com'
-  'www.example.com/index.html'
-
 EXAMPLE USAGE:
   
   --feeding from file and saving to html:
