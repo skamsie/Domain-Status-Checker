@@ -15,14 +15,58 @@ EXAMPLE USAGE:
   
   --print to stdout:
   
-    python domainStatus.py -d example.org -r
+    python domainStatus.py -d nob.ro -r
+    #  ** nob.ro ** 104.28.20.102 ** 200 -- OK ** ['Netim', 'http://www.netim.com']
   
 HTML FILE:
   
   The html file generated to populate the results will use the the same core name as the 
   one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
-  called 'generated_results' created where script is executing. The file uses the
-  jQuery for table sorting. Click on headers to sort.
+  called 'generated_results' created where the script is located. It contains a table similar
+  to the one below. 
+
+
+<table id="myTable">
+<thead>
+  <tr>
+    <th>Nr.</th>
+    <th>Domain Name</th>
+    <th>IP Address</th>
+    <th>Status</th>
+    <th>Registrar</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1</td>
+    <td><a href="http://www.example.com">www.example.com</a></td>
+    <td>93.184.216.34</td>
+    <td>200</td>
+    <td>N/A &#8226; N/A</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><a href="http://www.example.org">www.example.org</a></td>
+    <td>93.184.216.34</td>
+    <td>200</td>
+    <td>Internet Assigned Numbers Authority (IANA) (R193-LROR) &#8226; Domain Status: serverDeleteProhibited</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><a href="http://www.project10249.tk">www.project10249.tk</a></td>
+    <td>79.170.43.200</td>
+    <td>200</td>
+    <td>N/A &#8226; N/A</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><a href="http://www.nob.ro">www.nob.ro</a></td>
+    <td>85.9.53.130</td>
+    <td>200</td>
+    <td>Netim &#8226; http://www.netim.com</td>
+  </tr>
+</tbody>
+</table>
 
 The domainStatus.py script uses the pywhois library for getting domain name registrar
 and referral url. The needed files are included. More about python-whois on: 
