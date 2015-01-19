@@ -1,4 +1,4 @@
-Domain Status Verifier.
+<strong>Domain Status Verifier.</strong>
 
 The domainStatus.py script verifies the status of domain names based on a provided file 
 or command line input. Additionally it gets the Domain Name Registrar and referral URL. 
