@@ -11,7 +11,7 @@ EXAMPLE USAGE:
 
     python domainStatus.py -f domains.txt
     python domainStatus.py -f domains.txt --registrar --> also adds the registrar column
-    python domainStatus.py -f domains.txt --length 2 10 --> parses file from lines 10 to 20
+    python domainStatus.py -f domains.txt --length 2 10 --> parses file from lines 2 to 10
   
   --print to stdout:
   
