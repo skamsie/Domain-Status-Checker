@@ -1,3 +1,7 @@
+#The domainStatus.py script uses the python-whois library for getting domain name 
+#registrar and referral url. The needed files are included. More about python-whois on: 
+#'https://code.google.com/p/pywhois/'
+
 """Domain Status Verifier.
 
 This module verifies the status of domain names based on a provided file or command line
@@ -24,7 +28,7 @@ EXAMPLE USAGE:
 
     python domainStatus.py -f domains.txt
     python domainStatus.py -f domains.txt --registrar --> also adds the registrar column
-    python domainStatus.py -f domains.txt --length 2 10 --> parses file from lines 10 to 20
+    python domainStatus.py -f domains.txt --length 2 10 --> parses file from lines 2 to 10
   
   --print to stdout:
   
