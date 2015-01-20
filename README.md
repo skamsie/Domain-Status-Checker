@@ -17,15 +17,18 @@ EXAMPLE USAGE:
   
     python domain_status_info.py -d nob.ro -r
     #  ** nob.ro ** 104.28.20.102 ** 200 -- OK ** ['Netim', 'http://www.netim.com']
-  
+
+STATUS CODES:
+
+The status codes returned are similar with the ones return by the <code>curl -I command</code> on *nix systems. So codes like 301, 302, 503, etc are also possible, not only 200 and 404. Because it is a script it will unfortunatelly get <code>406 -- Not  Acceptable</code> from some domains.
+
 HTML FILE:
   
   The html file generated to populate the results will use the the same core name as the 
   one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
   called 'generated_results' created where the script is located. It contains a table similar
-  to the one below. 
-
-
+  to the one below or you can check out [this](generated_results/example_file_STATUS_0.html) example. 
+ 
 <table id="myTable">
 <thead>
   <tr>
