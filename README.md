@@ -1,6 +1,6 @@
-<strong>Domain Status Verifier.</strong>
+<strong>Domain Status Info.</strong>
 
-The domainStatus.py script verifies the status of domain names based on a provided file 
+The 'domain_status_info.py' script verifies the status of domain names based on a provided file 
 or command line input. Additionally it gets the Domain Name Registrar and referral URL. 
 The results are stored in an automatically generated html file or printed to stdout 
 depending on the options used.
@@ -9,9 +9,9 @@ EXAMPLE USAGE:
   
   --feeding from file and saving to html:
 
-    python domainStatus.py -f domains.txt
-    python domainStatus.py -f domains.txt --registrar --> also adds the registrar column
-    python domainStatus.py -f domains.txt --length 2 10 --> parses file from lines 2 to 10
+    python domain_status_info.py -f domains.txt
+    python domain_status_info.py -f domains.txt --registrar --> also adds the registrar column
+    python domain_status_info.py -f domains.txt --length 2 10 --> parses file from lines 2 to 10
   
   --print to stdout:
   
