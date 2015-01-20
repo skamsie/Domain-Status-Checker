@@ -27,7 +27,7 @@ HTML FILE:
   The html file generated to populate the results will use the the same core name as the 
   one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
   called 'generated_results' created where the script is located. It contains a table similar
-  to the one below or you can check out [this](generated_results/example_file_STATUS_0.html) example. 
+  to the one below or you can check out [this](http://project10249.tk/files/generated_results/example.html) example. 
  
 <table id="myTable">
 <thead>
