@@ -20,7 +20,7 @@ EXAMPLE USAGE:
 
 STATUS CODES:
 
-The status codes returned are similar with the ones return by the <code>curl -I command</code> on *nix systems. So codes like 301, 302, 503, etc are also possible, not only 200 and 404. Because it is a script it will unfortunatelly get <code>406 -- Not  Acceptable</code> from some domains.
+The status codes returned are similar with the ones return by the <code>curl -I</code> command on *nix systems. So codes like 301, 302, 503, etc are also possible, not only 200 and 404. Because it is a script it will unfortunatelly get <code>406 -- Not  Acceptable</code> from some domains.
 
 HTML FILE:
   
