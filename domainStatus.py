@@ -88,22 +88,24 @@ class DomainStatus(object):
   def __init__(self, domains_container):
     self.domains_container = domains_container
     self.html_file = ''
-  
+
   def left_strip_url(self, host):
+    """Prepare host address string."""
+
     if (host.startswith('http://www.')) or (host.startswith('https://www.')):
       host = host.lstrip('https://')
     return host
-  
+
   def get_IP(self, host):
     """ Translate a host name to IPv4 address format. The IPv4 address is returned as a 
       string, such as '100.50.200.5'. If the host name is an IPv4 address itself it is 
       returned unchanged.
-      
+
       Returns the IP string for success and 'IP N/A' if it fails to get it.
     """
-    host_domain = self.left_strip_url(host)
+    host_name = self.left_strip_url(host)
     try:
-      return socket.gethostbyname(host_domain)
+      return socket.gethostbyname(host_name)
     except socket.gaierror:
       return 'N/A'
 
@@ -116,16 +118,15 @@ class DomainStatus(object):
         string: exception message for everything else 
     """
 
-    if (host.startswith('http://www.')) or (host.startswith('https://www.')):
-      host = host.lstrip('https://')
+    host_name = self.left_strip_url(host)
     headers = { 'User-Agent' : USER_AGENT }
     params = urllib.urlencode(VALUES)
-    conn = httplib.HTTPConnection(host, timeout=TIMEOUT)
+    conn = httplib.HTTPConnection(host_name, timeout=TIMEOUT)
     try:
       conn.request("HEAD", "/", params, headers)
       response = conn.getresponse()
       if response.status in [400, 403]:
-        status = self.status_code_helper(host)
+        status = self.status_code_helper(host_name)
       else:
         status = '%i -- %s' %(response.status, response.reason)
     except socket.timeout:
@@ -134,7 +135,6 @@ class DomainStatus(object):
       status = e
     conn.close()
     return status
-
   
   def status_code_helper(self, host):
     """Helper method for 'get_status_code()'.
@@ -144,7 +144,6 @@ class DomainStatus(object):
       correct code.
     """
 
-    
     headers = { 'User-Agent' : USER_AGENT }
     data = urllib.urlencode(VALUES)
     if not (host.startswith('http://www.')) or (host.startswith('https://www.')):
@@ -169,6 +168,8 @@ class DomainStatus(object):
     return status
 
   def get_domain_name_registrar(self, host):
+    """Get domain name registrar using python-whois."""
+
     try:
       w = pythonwhois.whois(host)
       w.text
@@ -245,7 +246,7 @@ class DomainStatus(object):
       registrar_column = '    <th>Registrar</th>\n'
     else:
       registrar_column = ''
-    
+
     html_head = ('<!doctype html>\n'
                  '<html>\n<head>\n  <title>Domain Status</title>\n' 
                  '  <meta charset="utf-8" />\n  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />\n'
@@ -289,7 +290,7 @@ class DomainStatus(object):
                      '  </tr>\n'
                      '</thead>\n'
                      '<tbody>\n') %(registrar_column)
-    
+
     #create name for the save file
     core_name = os.path.basename(os.path.splitext(self.domains_container)[0])
     executing_file_path = os.path.dirname(sys.argv[0])
@@ -304,6 +305,7 @@ class DomainStatus(object):
       my_file.write(html_style)
       my_file.write(html_paragraph)
       my_file.write(domains_table)
+
 
 def main():
   """Parse options / arguments and instantiate class DomainStatus."""
