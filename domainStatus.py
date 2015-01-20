@@ -123,7 +123,7 @@ class DomainStatus(object):
     params = urllib.urlencode(VALUES)
     conn = httplib.HTTPConnection(host_name, timeout=TIMEOUT)
     try:
-      conn.request("HEAD", "/", params, headers)
+      conn.request("GET", "", params, headers)
       response = conn.getresponse()
       if response.status in [400, 403]:
         status = self.status_code_helper(host_name)
