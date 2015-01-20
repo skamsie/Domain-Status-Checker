@@ -15,7 +15,7 @@ EXAMPLE USAGE:
   
   --print to stdout:
   
-    python domainStatus.py -d nob.ro -r
+    python domain_status_info.py -d nob.ro -r
     #  ** nob.ro ** 104.28.20.102 ** 200 -- OK ** ['Netim', 'http://www.netim.com']
   
 HTML FILE:
