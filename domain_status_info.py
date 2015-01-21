@@ -1,5 +1,5 @@
-#The domain_status_info.py script uses the python-whois library for getting domain name
-#registrar and referral url. The needed files are included. More about python-whois on:
+#The domain_status_info.py script uses the pywhois library for getting domain name
+#registrar and referral url. The needed files are included. More about pywhois on:
 #'https://code.google.com/p/pywhois/'
 
 # pylint: disable=bad-indentation
@@ -50,7 +50,7 @@ import httplib
 import socket
 import urllib2
 import time
-import pythonwhois
+import pywhois
 import argparse
 import sys
 
@@ -166,7 +166,7 @@ class DomainStatus(object):
   def get_domain_name_registrar(self, host):
     """Get domain name registrar using python-whois."""
 
-    who = pythonwhois.whois(host)
+    who = pywhois.whois(host)
     who.text
     whois_info = [who.registrar, who.referral_url]
     new_whois_info = ['N/A' if i == [] else i for i in whois_info]

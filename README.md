@@ -73,5 +73,5 @@ HTML FILE:
 </table>
 
 The domainStatus.py script uses the pywhois library for getting domain name registrar
-and referral url. The needed files are included. More about python-whois on: 
+and referral url. The needed files are included. More about pywhois on: 
 'https://code.google.com/p/pywhois/'
