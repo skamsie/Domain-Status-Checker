@@ -10,8 +10,8 @@ EXAMPLE USAGE:
   --feeding from file and saving to html:
 
     python domain_status_info.py -f domains.txt
-    python domain_status_info.py -f domains.txt --registrar --> also adds the registrar column
-    python domain_status_info.py -f domains.txt --length 2 10 --> parses file from lines 2 to 10
+    python domain_status_info.py -f domains.txt --registrar # also adds the registrar column
+    python domain_status_info.py -f domains.txt --length 2 10 # parses file from lines 2 to 10
   
   --print to stdout:
   
