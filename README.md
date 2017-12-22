@@ -1,35 +1,42 @@
 <strong>Domain Status Info.</strong>
 
-The 'domain_status_info.py' script verifies the status of domain names based on a provided file 
-or command line input. Additionally it gets the Domain Name Registrar and referral URL. 
-The results are stored in an automatically generated html file or printed to stdout 
+The `domain_status_info.py` script verifies the status of domain names based on a provided file
+or command line input. Additionally it gets the Domain Name Registrar and referral URL.
+The results are stored in an automatically generated html file or printed to stdout
 depending on the options used.
 
 EXAMPLE USAGE:
-  
-  --feeding from file and saving to html:
 
-    python domain_status_info.py -f domains.txt
-    python domain_status_info.py -f domains.txt --registrar # also adds the registrar column
-    python domain_status_info.py -f domains.txt --length 2 10 # parses file from lines 2 to 10
-  
-  --print to stdout:
-  
-    python domain_status_info.py -d nob.ro -r
-    #  ** nob.ro ** 104.28.20.102 ** 200 -- OK ** ['Netim', 'http://www.netim.com']
+<strong>feeding from file and saving to html</strong>
+
+```bash
+> python domain_status_info.py -f domains.txt
+> python domain_status_info.py -f domains.txt --registrar # also adds the registrar column
+> python domain_status_info.py -f domains.txt --length 2 10 # parses file from lines 2 to 10
+```
+
+<strong>print to stdout</strong>
+
+```
+> python domain_status_info.py -d nob.ro skamsie.ro example.org -r
+
+> ** nob.ro ** 104.28.21.102 ** 200 -- OK ** ['Netim', 'http://www.netim.com']
+> ** skamsie.ro ** 104.27.160.159 ** 200 -- OK ** ['EuroDomenii', 'http://www.domenii.eu']
+> ** example.org ** 93.184.216.34 ** 200 -- OK ** ['ICANN', 'N/A']
+```
+
 
 STATUS CODES:
 
 The status codes returned are similar with the ones return by the <code>curl -I</code> command on *nix systems. So codes like 301, 302, 503, etc are also possible, not only 200 and 404. Because it is a script it will unfortunatelly get <code>406 -- Not  Acceptable</code> from some domains.
 
 HTML FILE:
-  
-  The html file generated to populate the results will use the the same core name as the 
+
+  The html file generated to populate the results will use the the same core name as the
   one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
   called 'generated_results' created where the script is located. It contains a table similar
-  to the one below. 
-  Check out a file generated with this script <strong>[here](http://project10249.tk/files/generated_results/example.html)</strong>.
- 
+  to the one below.
+
 <table id="myTable">
 <thead>
   <tr>
@@ -56,13 +63,6 @@ HTML FILE:
     <td>Internet Assigned Numbers Authority (IANA) (R193-LROR) &#8226; Domain Status: serverDeleteProhibited</td>
   </tr>
   <tr>
-    <td>3</td>
-    <td><a href="http://www.project10249.tk">www.project10249.tk</a></td>
-    <td>79.170.43.200</td>
-    <td>200</td>
-    <td>N/A &#8226; N/A</td>
-  </tr>
-  <tr>
     <td>4</td>
     <td><a href="http://www.nob.ro">www.nob.ro</a></td>
     <td>85.9.53.130</td>
@@ -73,5 +73,5 @@ HTML FILE:
 </table>
 
 The script uses the pywhois library for getting domain name registrar
-and referral url. The needed files are included. More about pywhois on: 
+and referral url. The needed files are included. More about pywhois on:
 'https://code.google.com/p/pywhois/'
