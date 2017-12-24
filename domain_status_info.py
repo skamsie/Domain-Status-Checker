@@ -1,7 +1,9 @@
-#The domain_status_info.py script uses the pywhois library for getting domain name
-#registrar and referral url. The needed files are included. More about pywhois on:
-#'https://code.google.com/p/pywhois/'
+#!/usr/bin/env python
 
+# The domain_status_info.py script depends on the whois library for getting domain name
+# registrar and referral url. It is however optional, and if not installed the -r or --registrar
+# flag will be ignored.
+# pip install python-whois
 # pylint: disable=bad-indentation
 
 """Domain Status Info.
@@ -11,7 +13,7 @@ input. Additionally it gets the Domain Name Registrar and referral URL. The resu
 stored in an automatically generated html file or printed to stdout depending on the
 options used.
 
-!!IMPORTANT: This script assumes that the external file containing the domains to be
+The script assumes that the external file containing the domains to be
 verified are each on a newline and are of the following form:
 
   VALID:
@@ -44,16 +46,25 @@ HTML FILE:
   jQuery for table sorting. Click on headers to sort.
 
 """
-
+from __future__ import print_function, division
 import os
-import httplib
 import socket
-import urllib2
 import time
-import pywhois
 import argparse
 import sys
 
+if sys.version_info >= (3, 0):
+    import http.client as httplib
+    import urllib as urllibrary
+else:
+    import urllib2 as urllibrary
+    import httplib
+try:
+    import whois
+    WHOIS = True
+except ImportError:
+    WHOIS = False
+    print('WARNING: whois library not installed\npip install python-whois\n')
 
 TIMEOUT = 5
 HEADERS = {
@@ -138,7 +149,7 @@ class DomainStatus(object):
     """Helper method for 'get_status_code()'.
 
       Sometimes when using the 'httplib.request('GET', ...)' method, the response
-      is erroneously returned as '400 or 403'. Using urllib2.getcode() returns the
+      is erroneously returned as '400 or 403'. Using urllibrary.getcode() returns the
       correct code.
     """
 
@@ -147,15 +158,15 @@ class DomainStatus(object):
         host = 'http://%s' %host
       else:
         host = 'http://www.%s' %host
-    req = urllib2.Request(host, headers=HEADERS)
+    req = urllibrary.Request(host, headers=HEADERS)
     try:
-      response = urllib2.urlopen(url=req, timeout=TIMEOUT)
+      response = urllibrary.urlopen(url=req, timeout=TIMEOUT)
       status = response.getcode()
       if status == 200:
         status = '200 -- OK'
-    except urllib2.HTTPError, http_err:
+    except urllibrary.HTTPError as http_err:
       status = '%i -- %s' %(http_err.code, http_err.reason)
-    except urllib2.URLError as url_err:
+    except urllibrary.URLError as url_err:
       status = url_err.reason
     except socket.timeout:
       return 'timed out (%i ms)' %(TIMEOUT * 1000)
@@ -165,12 +176,12 @@ class DomainStatus(object):
 
   def get_domain_name_registrar(self, host):
     """Get domain name registrar using python-whois."""
+    if not WHOIS:
+        return
 
-    who = pywhois.whois(host)
-    who.text
+    who = whois.whois(host)
     whois_info = [who.registrar, who.referral_url]
-    new_whois_info = ['N/A' if i == [] else i for i in whois_info]
-    return new_whois_info
+    return ['N/A' if i == [] else i for i in whois_info]
 
   def add_status_to_html(self, parse_length=0, name_registrar=False):
     """Adds the domain status as table entries in the created html file.
@@ -197,7 +208,7 @@ class DomainStatus(object):
       for url in url_list:
         status_code = self.get_status_code(url)
         ip_value = str(self.get_ip(url))
-        if name_registrar:
+        if name_registrar and WHOIS:
           registrar = self.get_domain_name_registrar(url)
           registrar_entry = '    <td>%s &bullet; %s</td>\n' %(registrar[0], registrar[1])
         else:
@@ -212,7 +223,7 @@ class DomainStatus(object):
                       '  </tr>\n' % (row_nr, host_domain, host_domain, ip_value, status_code,
                                      registrar_entry))
         row_nr += 1
-        print '%s ** %s ** line %s' % (url, status_code, feed_list.index(url) + 1)
+        print('%s ** %s ** line %s' % (url, status_code, feed_list.index(url) + 1))
       my_file.write('</tbody>\n'
                     '</table>\n'
                     '</body>\n'
@@ -227,16 +238,16 @@ class DomainStatus(object):
     for domain in self.domains_container:
       domain_status = self.get_status_code(domain)
       ip_val = self.get_ip(domain)
-      if name_registrar:
+      if name_registrar and WHOIS:
         domain_registrar = self.get_domain_name_registrar(domain)
-        print '** %s ** %s ** %s ** %s' % (domain, ip_val, domain_status, domain_registrar)
+        print('** %s ** %s ** %s ** %s' % (domain, ip_val, domain_status, domain_registrar))
       else:
-        print '** %s ** %s ** %s' % (domain, ip_val, domain_status)
+        print('** %s ** %s ** %s' % (domain, ip_val, domain_status))
 
   def _create_html_template(self, parse_length, name_registrar):
     """Creates a html template file with a table."""
 
-    if name_registrar:
+    if name_registrar and WHOIS:
       registrar_column = '    <th>Registrar</th>\n'
     else:
       registrar_column = ''
@@ -309,7 +320,7 @@ def main():
     PARSER.error('Invalid options / args usage. Use -h for help\nEXAMPLE: '
                  '--file my_file.txt OR --display domain1.com domain2.com etc...')
   if ARGS.file:
-    print ARGS.file
+    print(ARGS.file)
     save_test = DomainStatus(ARGS.file)
     save_test.add_status_to_html(parse_length=ARGS.length, name_registrar=ARGS.registrar)
   if ARGS.display:
