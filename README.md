@@ -1,13 +1,17 @@
-<strong>Domain Status Info.</strong>
+## Domain Status Checker
 
 The `domain_status_info.py` script verifies the status of domain names based on a provided file
 or command line input. Additionally it gets the Domain Name Registrar and referral URL.
 The results are stored in an automatically generated html file or printed to stdout
 depending on the options used.
 
-EXAMPLE USAGE:
+#### Requirements
 
-<strong>feeding from file and saving to html</strong>
+The script depends on the `whois` library for getting domain name registrar and referral url. It is however optional, and if not installed the `-r` or `--registrar` flag will be ignored. Use `pip install python-whois` in case you want this information.
+
+#### Usage
+
+* Feeding from file and saving to html
 
 ```bash
 > python domain_status_info.py -f domains.txt
@@ -15,7 +19,7 @@ EXAMPLE USAGE:
 > python domain_status_info.py -f domains.txt --length 2 10 # parses file from lines 2 to 10
 ```
 
-<strong>print to stdout</strong>
+* Print to stdout
 
 ```bash
 > python domain_status_info.py -d nob.ro skamsie.ro example.org -r
@@ -25,53 +29,15 @@ EXAMPLE USAGE:
 > ** example.org ** 93.184.216.34 ** 200 -- OK ** ['ICANN', 'N/A']
 ```
 
+#### Status codes
 
-STATUS CODES:
+The status codes returned are similar with the ones returned by the <code>curl -I</code> command on *nix systems. Because it is a script it will sometimes get <code>406 -- Not  Acceptable</code> from some domains. Note that it does not follow redirects.
 
-The status codes returned are similar with the ones return by the <code>curl -I</code> command on *nix systems. So codes like 301, 302, 503, etc are also possible, not only 200 and 404. Because it is a script it will unfortunatelly get <code>406 -- Not  Acceptable</code> from some domains.
+#### HTML File
 
-HTML FILE:
+The html file generated to populate the results will use the the same core name as the
+one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
+called 'generated_results' created where the script is located. It contains a table like
+the one below.
 
-  The html file generated to populate the results will use the the same core name as the
-  one used as argument + 'STATUS' + interval of lines parsed. It will be saved in a folder
-  called 'generated_results' created where the script is located. It contains a table similar
-  to the one below.
-
-<table id="myTable">
-<thead>
-  <tr>
-    <th>Nr.</th>
-    <th>Domain Name</th>
-    <th>IP Address</th>
-    <th>Status</th>
-    <th>Registrar</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>1</td>
-    <td><a href="http://www.example.com">www.example.com</a></td>
-    <td>93.184.216.34</td>
-    <td>200</td>
-    <td>N/A &#8226; N/A</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td><a href="http://www.example.org">www.example.org</a></td>
-    <td>93.184.216.34</td>
-    <td>200</td>
-    <td>Internet Assigned Numbers Authority (IANA) (R193-LROR) &#8226; Domain Status: serverDeleteProhibited</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td><a href="http://www.nob.ro">www.nob.ro</a></td>
-    <td>85.9.53.130</td>
-    <td>200</td>
-    <td>Netim &#8226; http://www.netim.com</td>
-  </tr>
-</tbody>
-</table>
-
-The script uses the pywhois library for getting domain name registrar
-and referral url. The needed files are included. More about pywhois on:
-'https://code.google.com/p/pywhois/'
+![screenshot](https://github.com/skamsie/Domain-Status-Checker/raw/master/screenshot.png)
