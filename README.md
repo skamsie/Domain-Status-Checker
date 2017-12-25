@@ -9,6 +9,8 @@ depending on the options used.
 
 The script depends on the `whois` library for getting domain name registrar and referral url. It is however optional, and if not installed the `-r` or `--registrar` flag will be ignored. Use `pip install python-whois` in case you want this information.
 
+Supports python 2 and 3
+
 ### Usage
 
 * Feeding from file and saving to html
