@@ -2,3 +2,4 @@ www.example.com
 www.example.org
 www.skamsie.ro
 www.nob.ro
+emag.ro
